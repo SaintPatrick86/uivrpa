@@ -1,0 +1,402 @@
+{
+  "Name": "Impftermin suchen-V1.1",
+  "CreationDate": "2021-5-15",
+  "Commands": [
+    {
+      "Command": "executeScript_Sandbox",
+      "Target": "var d = new Date(); m = d.getDate()+\"-\"+(d.getMonth()+1)+\"-\"+ d.getFullYear()+\"_\"+ d.getHours()+\"ː\" + d.getMinutes() + \"ː\" + d.getSeconds(); return m",
+      "Value": "timestamp",
+      "Description": ""
+    },
+    {
+      "Command": "store",
+      "Target": "RPA Start; ;${timestamp}",
+      "Value": "!csvline",
+      "Description": ""
+    },
+    {
+      "Command": "csvSave",
+      "Target": "testcsv",
+      "Value": "",
+      "Description": ""
+    },
+    {
+      "Command": "executeScript_Sandbox",
+      "Target": "return [\"https://001-iz.impfterminservice.de/impftermine/service?plz=76646\",\"https://001-iz.impfterminservice.de/impftermine/service?plz=76133\",\"https://001-iz.impfterminservice.de/impftermine/service?plz=68163\",\"https://001-iz.impfterminservice.de/impftermine/service?plz=69124\"];",
+      "Value": "ArrayURL",
+      "Description": ""
+    },
+    {
+      "Command": "store",
+      "Target": "Array filled with Urls; ;${timestamp} ",
+      "Value": "!csvline",
+      "Description": ""
+    },
+    {
+      "Command": "csvSave",
+      "Target": "testcsv",
+      "Value": "",
+      "Description": ""
+    },
+    {
+      "Command": "forEach",
+      "Target": "ArrayURL",
+      "Value": "URL",
+      "Description": ""
+    },
+    {
+      "Command": "store",
+      "Target": "Start URL Loop; ${URL}; ${timestamp} ",
+      "Value": "!csvline",
+      "Description": ""
+    },
+    {
+      "Command": "csvSave",
+      "Target": "testcsv",
+      "Value": "",
+      "Description": ""
+    },
+    {
+      "Command": "open",
+      "Target": "${URL}",
+      "Value": "",
+      "Description": ""
+    },
+    {
+      "Command": "store",
+      "Target": "0",
+      "Value": "iWarte",
+      "Description": ""
+    },
+    {
+      "Command": "label",
+      "Target": "LoopStat",
+      "Value": "",
+      "Description": ""
+    },
+    {
+      "Command": "sourceSearch",
+      "Target": "regex=Virtueller Warteraum",
+      "Value": "sourceWarte",
+      "Description": ""
+    },
+    {
+      "Command": "sourceSearch",
+      "Target": "regex=Wartungsarbeiten",
+      "Value": "sourceWartung",
+      "Description": ""
+    },
+    {
+      "Command": "sourceSearch",
+      "Target": "regex=Wurde Ihr Anspruch auf eine Corona-Schutzimpfung bereits geprüft?",
+      "Value": "sourceAnspruch",
+      "Description": ""
+    },
+    {
+      "Command": "if_v2",
+      "Target": "${sourceWarte} >= 1",
+      "Value": "",
+      "Description": ""
+    },
+    {
+      "Command": "store",
+      "Target": "Waiting Room Loop ${iWarte}/5; ${URL} ;${timestamp} ",
+      "Value": "!csvline",
+      "Description": ""
+    },
+    {
+      "Command": "csvSave",
+      "Target": "testcsv",
+      "Value": "",
+      "Description": ""
+    },
+    {
+      "Command": "echo",
+      "Target": "Warteraum",
+      "Value": "Blue",
+      "Description": ""
+    },
+    {
+      "Command": "pause",
+      "Target": "10000",
+      "Value": "",
+      "Description": ""
+    },
+    {
+      "Command": "while_v2",
+      "Target": "${iWarte} < 5",
+      "Value": "",
+      "Description": ""
+    },
+    {
+      "Command": "executeScript_Sandbox",
+      "Target": "return Number (${iWarte}) + 1;",
+      "Value": "iWarte",
+      "Description": ""
+    },
+    {
+      "Command": "gotoLabel",
+      "Target": "loopStat",
+      "Value": "",
+      "Description": ""
+    },
+    {
+      "Command": "end",
+      "Target": "",
+      "Value": "",
+      "Description": ""
+    },
+    {
+      "Command": "store",
+      "Target": "Waiting Room Loop End; ${URL} ;${timestamp} ",
+      "Value": "!csvline",
+      "Description": ""
+    },
+    {
+      "Command": "csvSave",
+      "Target": "testcsv",
+      "Value": "",
+      "Description": ""
+    },
+    {
+      "Command": "elseif",
+      "Target": "${sourceWartung} >= 1",
+      "Value": "",
+      "Description": ""
+    },
+    {
+      "Command": "store",
+      "Target": "Portal Maintenance; ${URL} ; ${timestamp}",
+      "Value": "!csvline",
+      "Description": ""
+    },
+    {
+      "Command": "csvSave",
+      "Target": "testcsv",
+      "Value": "",
+      "Description": ""
+    },
+    {
+      "Command": "echo",
+      "Target": "Portal befindet sich im Wartungsmodus",
+      "Value": "RED",
+      "Description": ""
+    },
+    {
+      "Command": "elseif",
+      "Target": "${sourceAnspruch} >= 1",
+      "Value": "",
+      "Description": ""
+    },
+    {
+      "Command": "store",
+      "Target": "Check Anspruch; ${URL} ; ${timestamp}",
+      "Value": "!csvline",
+      "Description": ""
+    },
+    {
+      "Command": "csvSave",
+      "Target": "testcsv",
+      "Value": "",
+      "Description": ""
+    },
+    {
+      "Command": "echo",
+      "Target": "Prüfung Anspruch",
+      "Value": "Green",
+      "Description": ""
+    },
+    {
+      "Command": "click",
+      "Target": "xpath=/html/body/app-root/div/app-page-its-login/div/div/div[2]/app-its-login-user/div/div/app-corona-vaccination/div[2]/div/div/label[2]/span",
+      "Value": "",
+      "Description": ""
+    },
+    {
+      "Command": "pause",
+      "Target": "15000",
+      "Value": "",
+      "Description": ""
+    },
+    {
+      "Command": "sourceSearch",
+      "Target": "regex=Es wurden keine freien Termine in Ihrer Region gefunden",
+      "Value": "sourceKapazitaet",
+      "Description": ""
+    },
+    {
+      "Command": "sourceSearch",
+      "Target": "regex=Gehören Sie einer impfberechtigten Personengruppen an?",
+      "Value": "sourceVerf",
+      "Description": ""
+    },
+    {
+      "Command": "if_v2",
+      "Target": "${sourceAnspruch} >= 0",
+      "Value": "",
+      "Description": ""
+    },
+    {
+      "Command": "store",
+      "Target": "No Cappcity; ${URL} ; ${timestamp}",
+      "Value": "!csvline",
+      "Description": ""
+    },
+    {
+      "Command": "csvSave",
+      "Target": "testcsv",
+      "Value": "",
+      "Description": ""
+    },
+    {
+      "Command": "echo",
+      "Target": "Derzeit keine Kapazitäten",
+      "Value": "RED",
+      "Description": ""
+    },
+    {
+      "Command": "elseif",
+      "Target": "${sourceVerf} >= 0",
+      "Value": "",
+      "Description": ""
+    },
+    {
+      "Command": "store",
+      "Target": "Age Check; ${URL} ; ${timestamp}",
+      "Value": "!csvline",
+      "Description": ""
+    },
+    {
+      "Command": "csvSave",
+      "Target": "testcsv",
+      "Value": "",
+      "Description": ""
+    },
+    {
+      "Command": "click",
+      "Target": "xpath=/html/body/app-root/div/app-page-its-login/div/div/div[2]/app-its-login-user/div/div/app-corona-vaccination/div[3]/div/div/div/div[2]/div/app-corona-vaccination-no/form/div/div/div/label/span",
+      "Value": "",
+      "Description": ""
+    },
+    {
+      "Command": "sendKeys",
+      "Target": "name=age",
+      "Value": "35",
+      "Description": ""
+    },
+    {
+      "Command": "click",
+      "Target": "xpath=//button[@type='submit']",
+      "Value": "",
+      "Description": ""
+    },
+    {
+      "Command": "pause",
+      "Target": "2000",
+      "Value": "",
+      "Description": ""
+    },
+    {
+      "Command": "sourceSearch",
+      "Target": "Es wurden keine freien Termine in Ihrer Region gefunden.",
+      "Value": "sourceVerfAge",
+      "Description": ""
+    },
+    {
+      "Command": "if_v2",
+      "Target": "${sourceVerfAge} >= 0",
+      "Value": "sourceVerfAge",
+      "Description": ""
+    },
+    {
+      "Command": "store",
+      "Target": "No Cappacity for given Age; ${URL} ; ${timestamp}",
+      "Value": "!csvline",
+      "Description": ""
+    },
+    {
+      "Command": "csvSave",
+      "Target": "testcsv",
+      "Value": "",
+      "Description": ""
+    },
+    {
+      "Command": "echo",
+      "Target": "Impstoff verfügbar aber anderer Altersbereich",
+      "Value": "RED",
+      "Description": ""
+    },
+    {
+      "Command": "else",
+      "Target": "",
+      "Value": "",
+      "Description": ""
+    },
+    {
+      "Command": "store",
+      "Target": "Code found sent Mail; ${URL} ; ${timestamp}",
+      "Value": "!csvline",
+      "Description": ""
+    },
+    {
+      "Command": "csvSave",
+      "Target": "testcsv",
+      "Value": "",
+      "Description": ""
+    },
+    {
+      "Command": "run",
+      "Target": "Email_send",
+      "Value": "",
+      "Description": ""
+    },
+    {
+      "Command": "end",
+      "Target": "",
+      "Value": "",
+      "Description": ""
+    },
+    {
+      "Command": "else",
+      "Target": "",
+      "Value": "",
+      "Description": ""
+    },
+    {
+      "Command": "end",
+      "Target": "",
+      "Value": "",
+      "Description": ""
+    },
+    {
+      "Command": "end",
+      "Target": "",
+      "Value": "",
+      "Description": ""
+    },
+    {
+      "Command": "pause",
+      "Target": "5000",
+      "Value": "",
+      "Description": ""
+    },
+    {
+      "Command": "store",
+      "Target": "RPA End; ${URL} ; ${timestamp}",
+      "Value": "!csvline",
+      "Description": ""
+    },
+    {
+      "Command": "csvSave",
+      "Target": "testcsv",
+      "Value": "",
+      "Description": ""
+    },
+    {
+      "Command": "end",
+      "Target": "",
+      "Value": "",
+      "Description": ""
+    }
+  ]
+}
