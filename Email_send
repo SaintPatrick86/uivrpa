@@ -1,0 +1,54 @@
+{
+  "Name": "Email_send",
+  "CreationDate": "2021-5-15",
+  "Commands": [
+    {
+      "Command": "open",
+      "Target": "https://mail.google.com/mail/u/0/#inbox",
+      "Value": "",
+      "Description": ""
+    },
+    {
+      "Command": "click",
+      "Target": "xpath=//div[2]/div/div/div/div/div/div/div/div/div",
+      "Value": "",
+      "Description": ""
+    },
+    {
+      "Command": "click",
+      "Target": "name=to",
+      "Value": "",
+      "Description": ""
+    },
+    {
+      "Command": "sendKeys",
+      "Target": "name=to",
+      "Value": "sample@gmail.com",
+      "Description": ""
+    },
+    {
+      "Command": "click",
+      "Target": "name=subjectbox",
+      "Value": "",
+      "Description": ""
+    },
+    {
+      "Command": "sendKeys",
+      "Target": "name=subjectbox",
+      "Value": "Impftermin gefunden",
+      "Description": ""
+    },
+    {
+      "Command": "click",
+      "Target": "id=:hp",
+      "Value": "",
+      "Description": ""
+    },
+    {
+      "Command": "",
+      "Target": "",
+      "Value": "",
+      "Description": ""
+    }
+  ]
+}
