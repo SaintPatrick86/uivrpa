@@ -1,0 +1,113 @@
+{
+  "Name": "Termin_Stadt_Karlsruhe",
+  "CreationDate": "2022-3-29",
+  "Commands": [
+    {
+      "Command": "label",
+      "Target": "start",
+      "Value": "",
+      "Description": ""
+    },
+    {
+      "Command": "open",
+      "Target": "https://stadt-karlsruhe.saas.smartcjm.com/m/stadt-karlsruhe/extern/calendar/?uid=54f4114e-d167-437b-a0d6-594406f7a0ac&wsid=7f1bbc55-c328-4ab4-84b2-7e21fc585745&lang=de",
+      "Value": "",
+      "Description": ""
+    },
+    {
+      "Command": "refresh",
+      "Target": "",
+      "Value": "",
+      "Description": ""
+    },
+    {
+      "Command": "label",
+      "Target": "weiterCheck",
+      "Value": "",
+      "Description": ""
+    },
+    {
+      "Command": "sourceSearch",
+      "Target": "regex=<i class=\"right arrow icon\"></i>weiter</button>",
+      "Value": "sourceWeiter",
+      "Description": ""
+    },
+    {
+      "Command": "if_v2",
+      "Target": "${sourceWeiter}>=1",
+      "Value": "",
+      "Description": ""
+    },
+    {
+      "Command": "click",
+      "Target": "xpath=//*[@id=\"forward-service\"]/i",
+      "Value": "",
+      "Targets": [
+        "xpath=//*[@id=\"forward-service\"]/i",
+        "xpath=//div[3]/div[3]/div/div[2]/button/i",
+        "css=#forward-service > i"
+      ],
+      "Description": ""
+    },
+    {
+      "Command": "sourceSearch",
+      "Target": "regex=Die Terminkapazität ist vorübergehend ausgebucht. ",
+      "Value": "searchTerminkapa",
+      "Description": ""
+    },
+    {
+      "Command": "if_v2",
+      "Target": "${searchTerminkapa}>=1",
+      "Value": "",
+      "Description": ""
+    },
+    {
+      "Command": "pause",
+      "Target": "1000",
+      "Value": "",
+      "Description": ""
+    },
+    {
+      "Command": "gotoLabel",
+      "Target": "start",
+      "Value": "",
+      "Description": ""
+    },
+    {
+      "Command": "end",
+      "Target": "",
+      "Value": "",
+      "Description": ""
+    },
+    {
+      "Command": "else",
+      "Target": "${sourceWeiter}<1",
+      "Value": "",
+      "Description": ""
+    },
+    {
+      "Command": "click",
+      "Target": "xpath=//*[@id=\"service_field\"]/div[3]/div/div[2]/span[3]",
+      "Value": "",
+      "Targets": [
+        "xpath=//*[@id=\"service_field\"]/div[3]/div/div[2]/span[3]",
+        "xpath=//span[@onclick=\"changecap(1,8,'dae943f9-cf21-42cc-bebb-32187e937465')\"]",
+        "xpath=//div[3]/div/div[2]/span[3]",
+        "css=#service_field > div:nth-child(3) > div > div.counter > span:nth-child(4)"
+      ],
+      "Description": ""
+    },
+    {
+      "Command": "gotoLabel",
+      "Target": "weiterCheck",
+      "Value": "",
+      "Description": ""
+    },
+    {
+      "Command": "end",
+      "Target": "",
+      "Value": "",
+      "Description": ""
+    }
+  ]
+}
